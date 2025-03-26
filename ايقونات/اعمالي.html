@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>معرض أعمالي | قاسم عبدالباري - مصمم جرافيك</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #2c3e50;
+            --accent-color: #3498db;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Tajawal', sans-serif;
+        }
+        
+        body {
+            background-color: #f9f9f9;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* الترويسة */
+        .portfolio-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--dark-color));
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .portfolio-header::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" preserveAspectRatio="none"><path fill="rgba(255,255,255,0.05)" d="M0,0 L100,0 L100,100 L0,100 Z" /></svg>');
+            background-size: cover;
+            opacity: 0.1;
+        }
+        
+        .portfolio-header h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        
+        .portfolio-header p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        /* فلتر التصنيفات */
+        .portfolio-filter {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .filter-btn {
+            padding: 0.8rem 1.5rem;
+            border: none;
+            background-color: var(--light-color);
+            color: var(--dark-color);
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .filter-btn:hover, .filter-btn.active {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        /* معرض الأعمال */
+        .portfolio-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 2rem;
+            padding: 3rem;
+        }
+        
+        .portfolio-item {
+            position: relative;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            aspect-ratio: 1/1;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        
+        .portfolio-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            padding: 1rem;
+            text-align: center;
+        }
+        
+        .portfolio-item:hover .portfolio-overlay {
+            opacity: 1;
+        }
+        
+        .portfolio-overlay h3 {
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .portfolio-view {
+            color: white;
+            background-color: var(--accent-color);
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+        
+        .portfolio-view:hover {
+            background-color: var(--secondary-color);
+        }
+        
+        /* التذييل */
+        .portfolio-footer {
+            background-color: var(--dark-color);
+            color: white;
+            text-align: center;
+            padding: 2rem;
+            margin-top: 3rem;
+        }
+        
+        .back-btn {
+            display: inline-block;
+            margin-top: 1rem;
+            color: white;
+            text-decoration: none;
+            border: 2px solid white;
+            padding: 0.5rem 1.5rem;
+            border-radius: 50px;
+            transition: all 0.3s ease;
+        }
+        
+        .back-btn:hover {
+            background-color: white;
+            color: var(--dark-color);
+        }
+        
+        /* التأثيرات المتحركة */
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .portfolio-item {
+            animation: fadeIn 0.5s ease forwards;
+            opacity: 0;
+        }
+        
+        .portfolio-item:nth-child(1) { animation-delay: 0.1s; }
+        .portfolio-item:nth-child(2) { animation-delay: 0.2s; }
+        .portfolio-item:nth-child(3) { animation-delay: 0.3s; }
+        .portfolio-item:nth-child(4) { animation-delay: 0.4s; }
+        .portfolio-item:nth-child(5) { animation-delay: 0.5s; }
+        .portfolio-item:nth-child(6) { animation-delay: 0.6s; }
+        
+        /* التجاوب مع الأجهزة المختلفة */
+        @media (max-width: 768px) {
+            .portfolio-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+                padding: 1rem;
+            }
+            
+            .portfolio-header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ترويسة الصفحة -->
+    <header class="portfolio-header">
+        <h1>معرض أعمالي الإبداعية</h1>
+        <p>تصاميم مميزة تعكس خبرتي في مجال الجرافيك ديزاين والهوية البصرية</p>
+    </header>
+    
+    <!-- فلتر التصنيفات -->
+    <div class="portfolio-filter">
+        <button class="filter-btn active" data-filter="all">الكل</button>
+        <button class="filter-btn" data-filter="logo">تصميم الشعارات</button>
+        <button class="filter-btn" data-filter="branding">الهوية البصرية</button>
+        <button class="filter-btn" data-filter="social">وسائل التواصل</button>
+        <button class="filter-btn" data-filter="print">الطباعة والتغليف</button>
+    </div>
+    
+    <!-- معرض الأعمال -->
+    <div class="portfolio-gallery">
+        <!-- تصميم شعارات -->
+        <div class="portfolio-item" data-category="logo">
+            <img src="صور/Artboard 1-3.png" alt="تصميم شعار">
+            <div class="portfolio-overlay">
+                <h3>تصميم شعار احترافي</h3>
+                <a href="صور/Artboard 1-3.png" class="portfolio-view" target="_blank">عرض التصميم</a>
+            </div>
+        </div>
+        
+        <!-- هوية بصرية -->
+        <div class="portfolio-item" data-category="branding">
+            <img src="صور/Artboard 1.png" alt="هوية بصرية">
+            <div class="portfolio-overlay">
+                <h3>هوية بصرية متكاملة</h3>
+                <a href="صور/Artboard 1.png" class="portfolio-view" target="_blank">عرض التصميم</a>
+            </div>
+        </div>
+        
+        <!-- وسائل تواصل -->
+        <div class="portfolio-item" data-category="social">
+            <img src="صور/Artboard 1-4.png" alt="تصاميم وسائل تواصل">
+            <div class="portfolio-overlay">
+                <h3>تصاميم وسائل التواصل</h3>
+                <a href="صور/Artboard 1-4.png" class="portfolio-view" target="_blank">عرض التصميم</a>
+            </div>
+        </div>
+        
+        <!-- طباعة وتغليف -->
+        <div class="portfolio-item" data-category="print">
+            <img src="صور/Artboard 1-5.png" alt="تصميم مطبوعات">
+            <div class="portfolio-overlay">
+                <h3>تصميم كروت عمل</h3>
+                <a href="صور/Artboard 1-5.png" class="portfolio-view" target="_blank">عرض التصميم</a>
+            </div>
+        </div>
+        
+        <!-- تصميم شعارات -->
+        <div class="portfolio-item" data-category="logo">
+            <img src="صور/Artboard 1-6.png" alt="تصميم شعار">
+            <div class="portfolio-overlay">
+                <h3>شعار مبتكر لعلامة تجارية</h3>
+                <a href="صور/Artboard 1-6.png" class="portfolio-view" target="_blank">عرض التصميم</a>
+            </div>
+        </div>
+        
+        <!-- هوية بصرية -->
+        <div class="portfolio-item" data-category="branding">
+            <img src="صور/Artboard 1-7.png" alt="هوية بصرية">
+            <div class="portfolio-overlay">
+                <h3>هوية بصرية لشركة ناشئة</h3>
+                <a href="صور/Artboard 1-7.png" class="portfolio-view" target="_blank">عرض التصميم</a>
+            </div>
+        </div>
+    </div>
+    
+    <!-- تذييل الصفحة -->
+    <footer class="portfolio-footer">
+        <p>© 2023 جميع الحقوق محفوظة | تصميم وتنفيذ قاسم عبدالباري</p>
+        <a href="index.html" class="back-btn">العودة للصفحة الرئيسية</a>
+    </footer>
+    
+    <script>
+        // فلترة الأعمال حسب التصنيف
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                // إزالة التنشيط من جميع الأزرار
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                // تفعيل الزر المحدد
+                btn.classList.add('active');
+                
+                const filter = btn.getAttribute('data-filter');
+                const items = document.querySelectorAll('.portfolio-item');
+                
+                items.forEach(item => {
+                    if (filter === 'all' || item.getAttribute('data-category') === filter) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+        });
+        
+        // تأثير التحميل التدريجي
+        document.addEventListener('DOMContentLoaded', () => {
+            const items = document.querySelectorAll('.portfolio-item');
+            items.forEach((item, index) => {
+                item.style.animationDelay = `${index * 0.1}s`;
+            });
+        });
+    </script>
+</body>
+</html>
